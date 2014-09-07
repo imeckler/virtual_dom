@@ -1,0 +1,28 @@
+OASISFormat: 0.4
+Name:        Virtual_dom
+Version:     0.1
+Synopsis:    Virtual dom bindings for js_of_ocaml
+Authors:     Izaak Meckler
+License:     WTFPL
+Plugins:     META (0.4)
+BuildTools:  ocamlbuild
+
+Library virtual_dom
+  Path:           src
+  BuildDepends:   js_of_ocaml, js_of_ocaml.syntax, browser_utils
+  BuildTools:     camlp4o
+  CompiledObject: byte
+  Modules:        Virtual_dom
+  ByteOpt:        -syntax camlp4o -package js_of_ocaml -package js_of_ocaml.syntax
+  XMETARequires:  js_of_ocaml,js_of_ocaml.syntax,browser_utils
+
+Executable example
+  Path: example
+  MainIs: main.ml
+  Install: false
+  CompiledObject: byte
+  BuildDepends: virtual_dom, js_of_ocaml, js_of_ocaml.syntax
+
+PostBuildCommand:
+  js_of_ocaml main.byte -o example/www/main.js
+
